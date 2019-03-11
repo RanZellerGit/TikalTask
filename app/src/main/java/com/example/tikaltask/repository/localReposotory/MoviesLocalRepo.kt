@@ -5,16 +5,16 @@ import com.example.tikaltask.repository.model.Movie
 import io.reactivex.Observable
 
 
-class MoviesLocalRepo(private val moviesDao: MoviesDao){
+class MoviesLocalRepo(private val mMoviesDao: MoviesDao){
 
     fun getAllMovies(page : Int): Observable<List<Movie>> {
         return Observable.fromCallable {
-            val tmp = moviesDao.getMovies((page - 1) * Constants.PAGE_SIZE, (page) * Constants.PAGE_SIZE)
+            val tmp = mMoviesDao.getMovies((page - 1) * Constants.PAGE_SIZE, (page) * Constants.PAGE_SIZE)
             tmp
         }
     }
 
     fun insertMovies(movies : List<Movie>){
-        moviesDao.insertMovie(movies)
+        mMoviesDao.insertMovie(movies)
     }
 }

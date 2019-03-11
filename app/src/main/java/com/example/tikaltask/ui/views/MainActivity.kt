@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         const val TAG = "MainActivity"
-        const val MovieDetailsFragmentTAG = "MovieDetailsFragmentTAG"
+        const val MOVIE_DETAILS_FRAGMENT_TAG = "MOVIE_DETAILS_FRAGMENT_TAG"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +25,7 @@ class MainActivity : AppCompatActivity() {
         Log.d(TAG, "onCreate")
         setContentView(R.layout.activity_main)
 
-        val frag = supportFragmentManager.findFragmentByTag(MovieDetailsFragmentTAG)
+        val frag = supportFragmentManager.findFragmentByTag(MOVIE_DETAILS_FRAGMENT_TAG)
         if(frag != null) {
             supportFragmentManager.beginTransaction().remove(frag).commit()
         }
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
         if(resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE){
             supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.container, MovieDetailsFragment.instance() ,MovieDetailsFragmentTAG)
+                .replace(R.id.container, MovieDetailsFragment.instance() ,MOVIE_DETAILS_FRAGMENT_TAG)
                 .commit()
         }
 
@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        val frag = supportFragmentManager.findFragmentByTag(MovieDetailsFragmentTAG)
+        val frag = supportFragmentManager.findFragmentByTag(MOVIE_DETAILS_FRAGMENT_TAG)
         if(frag != null && resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT) {
             supportFragmentManager
                 .beginTransaction()

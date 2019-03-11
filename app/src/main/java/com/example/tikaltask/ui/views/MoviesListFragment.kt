@@ -44,7 +44,7 @@ class MoviesListFragment : Fragment(){
         val adapter = MoviesPageListAdapter {
             if(resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
                 activity?.supportFragmentManager?.beginTransaction()?.
-                    replace(R.id.container, MovieDetailsFragment.instance(), MainActivity.MovieDetailsFragmentTAG)?.commit()
+                    replace(R.id.container, MovieDetailsFragment.instance(), MainActivity.MOVIE_DETAILS_FRAGMENT_TAG)?.commit()
             }
             vm.updateMovieWasChosen(it)
         }

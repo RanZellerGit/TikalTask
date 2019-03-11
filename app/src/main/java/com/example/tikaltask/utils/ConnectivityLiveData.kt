@@ -7,10 +7,10 @@ import android.net.NetworkInfo
 import android.net.NetworkRequest
 import android.os.Build
 
-class ConnectivityLiveData(private val connectivityManager: ConnectivityManager)
+class ConnectivityLiveData(private val mConnectivityManager: ConnectivityManager)
     : LiveData<Boolean>() {
 
-    private val networkCallback = object : ConnectivityManager.NetworkCallback() {
+    private val mNetworkCallback = object : ConnectivityManager.NetworkCallback() {
         override fun onAvailable(network: Network?) {
             postValue(true)
         }
@@ -23,19 +23,19 @@ class ConnectivityLiveData(private val connectivityManager: ConnectivityManager)
     override fun onActive() {
         super.onActive()
 
-        val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
+        val activeNetwork: NetworkInfo? = mConnectivityManager.activeNetworkInfo
         postValue(activeNetwork?.isConnectedOrConnecting == true)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            connectivityManager.registerDefaultNetworkCallback(networkCallback)
+            mConnectivityManager.registerDefaultNetworkCallback(mNetworkCallback)
         } else {
             val builder = NetworkRequest.Builder()
-            connectivityManager.registerNetworkCallback(builder.build(), networkCallback)
+            mConnectivityManager.registerNetworkCallback(builder.build(), mNetworkCallback)
         }
     }
 
     override fun onInactive() {
         super.onInactive()
-        connectivityManager.unregisterNetworkCallback(networkCallback)
+        mConnectivityManager.unregisterNetworkCallback(mNetworkCallback)
     }
 }

@@ -1,7 +1,6 @@
 package com.example.tikaltask.paging
 
 import android.annotation.SuppressLint
-import android.arch.lifecycle.MutableLiveData
 import android.arch.paging.PageKeyedDataSource
 import com.example.tikaltask.repository.MoviesRepository
 import com.example.tikaltask.repository.model.Movie
@@ -10,23 +9,26 @@ import io.reactivex.disposables.CompositeDisposable
 import java.net.UnknownHostException
 
 class MoviesPageKeyedDataSource(val repository: MoviesRepository,
-                                val compositeDisposable: CompositeDisposable) : PageKeyedDataSource<Int, Movie>(){
+                                private val mCompositeDisposable: CompositeDisposable) : PageKeyedDataSource<Int, Movie>(){
 
-    val  ConnectionFailed = "Connection Failed"
+    companion object {
+        private const val CONNECTION_FAILED = "Connection Failed"
+    }
+
     val networkLiveData : SingleLiveEvent<String> = SingleLiveEvent()
-    private var pageIndex = 1
+    private var mPageIndex = 1
 
     @SuppressLint("CheckResult")
     override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Movie>) {
-        repository.getMovies(pageIndex).doOnSubscribe {disposable ->
-            compositeDisposable.add(disposable)
+        repository.getMovies(mPageIndex).doOnSubscribe { disposable ->
+            mCompositeDisposable.add(disposable)
         }.subscribe ({
             if(!it.isEmpty()){
-                callback.onResult(it, null, pageIndex + 1)
+                callback.onResult(it, null, mPageIndex + 1)
             }
         },{throwable ->
             if(throwable is UnknownHostException) {
-                networkLiveData.postValue(ConnectionFailed)
+                networkLiveData.postValue(CONNECTION_FAILED)
             }
         })
     }
@@ -34,14 +36,14 @@ class MoviesPageKeyedDataSource(val repository: MoviesRepository,
     @SuppressLint("CheckResult")
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
         repository.getMovies(params.key).doOnSubscribe {disposable ->
-            compositeDisposable.add(disposable)
+            mCompositeDisposable.add(disposable)
         }.subscribe ({
             if(!it.isEmpty()) {
                 callback.onResult(it, params.key + 1)
             }
         },{throwable ->
             if(throwable is UnknownHostException) {
-                networkLiveData.postValue(ConnectionFailed)
+                networkLiveData.postValue(CONNECTION_FAILED)
             }
         })
     }

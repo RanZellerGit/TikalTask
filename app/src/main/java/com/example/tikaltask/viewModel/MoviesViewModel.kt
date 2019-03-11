@@ -14,7 +14,7 @@ import io.reactivex.disposables.CompositeDisposable
 
 class MoviesViewModel(
     val moviesDataSourceFactory: MoviesDataSourceFactory,
-    private val compositeDisposable : CompositeDisposable,
+    private val mCompositeDisposable : CompositeDisposable,
     val connectivityLiveData : ConnectivityLiveData) : ViewModel(){
 
     lateinit var movieListLiveDate : LiveData<PagedList<Movie>>
@@ -43,7 +43,7 @@ class MoviesViewModel(
 
     override fun onCleared() {
         super.onCleared()
-        compositeDisposable.clear()
+        mCompositeDisposable.clear()
     }
 
 
