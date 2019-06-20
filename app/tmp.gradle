@@ -34,7 +34,7 @@ private setConfig(){
     tmp1.waitForProcessOutput(System.out, System.err)
 }
 private void gitPush() {
-    Process createCommit = ['git', 'push', 'https://github.com/RanZellerGit/TikalTask.git:master'].execute(null,  project.rootDir)
+    Process createCommit = ['git', 'push', 'https://RanZellerGit:w5Oi0xjXNhQs99@github.com/RanZellerGit/TikalTask.git'].execute(null,  project.rootDir)
     createCommit.waitForProcessOutput(System.out, System.err)
 }
 
