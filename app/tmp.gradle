@@ -27,6 +27,12 @@ private void commitAndSetTag(versionName) {
     createTag.waitForProcessOutput(System.out, System.err)
 }
 
+
+private setConfig(){
+        Process tmp = ['git', 'config --global user.email ranzellergit'].execute(null,  project.rootDir)
+        Process tmp1 = ['git', 'config --global user.password w5Oi0xjXNhQs99'].execute(null,  project.rootDir)
+    tmp1.waitForProcessOutput(System.out, System.err)
+}
 private void gitPush() {
     Process createCommit = ['git', 'push'].execute(null,  project.rootDir)
     createCommit.waitForProcessOutput(System.out, System.err)
@@ -44,6 +50,7 @@ private void save(versionName, versionCode) {
     versionProps['appVersionCode'] = versionCode
     versionProps.store(file('gradle.properties').newWriter(), null)
     commitAndSetTag(versionName)
+    setConfig()
     gitPush()
 }
 
