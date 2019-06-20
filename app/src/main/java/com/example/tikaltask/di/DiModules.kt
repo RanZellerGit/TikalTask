@@ -26,8 +26,6 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
 val applicationModule = module {
-
-    
     // Local Repo
     single<MoviesDao> { Room.databaseBuilder(androidContext(), MoviesDatabase::class.java, "db.name").build().getMoviesDao() }
     single { MoviesLocalRepo(get()) }
