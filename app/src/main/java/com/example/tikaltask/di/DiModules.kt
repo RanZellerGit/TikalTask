@@ -46,6 +46,7 @@ val applicationModule = module {
             .create(TmdbApi::class.java)
     }
 
+
     single { MoviesRemoteRepo(get()) }
 
     // Repository
