@@ -9,6 +9,7 @@ apply plugin: 'kotlin-kapt'
 apply from: 'tmp.gradle'
 
 android {
+
     compileSdkVersion 28
     defaultConfig {
         applicationId "com.example.tikaltask"
@@ -17,14 +18,34 @@ android {
         versionCode appVersionCode.toInteger()
         versionName appVersionName
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
     }
+
+    android.applicationVariants.all { variant ->
+        renameArtifact(variant, "debug")
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+
+        }
+
+
     }
 }
+
+def renameArtifact(variant, defaultConfig) {
+    variant.outputs.all { output ->
+        def fullName = output.outputFile.name
+        def projectName = fullName.substring(0, fullName.indexOf('-'))
+        outputFileName = "${projectName}-${variant.name}-${appVersionName}.apk"
+    }
+}
+
 
 
 ext {
