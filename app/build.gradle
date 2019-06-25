@@ -8,6 +8,27 @@ apply plugin: 'kotlin-kapt'
 
 apply from: 'tmp.gradle'
 
+apply plugin: 'com.mindera.gradle.slack'
+
+buildscript {
+
+    repositories {
+        maven {
+            url "https://jitpack.io"
+        }
+    }
+
+    dependencies {
+        classpath 'com.github.Mindera:gradle-slack-plugin:1.0.7'
+    }
+}
+
+slack {
+    url 'https://hooks.slack.com/services/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'
+    dependsOnTasks 'bumperVersionPatch','bumperVersionMinor'
+    title "https://tikalapks3.s3-us-west-1.amazonaws.com/TikalTask/TikalTask_Build/${number}/${getVersion()['appVersionName']}.apk"
+}
+
 android {
 
     compileSdkVersion 28
@@ -38,12 +59,22 @@ android {
     }
 }
 
+def getVersion(){
+    def versionPropsFile = file('gradle.properties')
+    if (!versionPropsFile.exists()) {
+        versionPropsFile.createNewFile()
+    }
+    def versionProps = new Properties()
+    versionProps.load(new FileInputStream(versionPropsFile))
+    return versionProps
+}
 def renameArtifact(variant, defaultConfig) {
     variant.outputs.all { output ->
         def fullName = output.outputFile.name
         def projectName = fullName.substring(0, fullName.indexOf('-'))
-        outputFileName = "${projectName}-${variant.name}-${appVersionName}.apk"
     }
+
+
 }
 
 
