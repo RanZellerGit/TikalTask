@@ -72,7 +72,7 @@ def renameArtifact(variant, defaultConfig) {
     variant.outputs.all { output ->
         def fullName = output.outputFile.name
         def projectName = fullName.substring(0, fullName.indexOf('-'))
-        outputFileName = "${projectName}-${variant.name}-${appVersionName}-${System.getenv("BUILD_NUMBER")+1}.apk"
+        outputFileName = "${projectName}-${variant.name}-${appVersionName}-${System.getenv("BUILD_NUMBER")}.apk"
     }
 
 
