@@ -25,7 +25,7 @@ buildscript {
 
 slack {
     url 'https://hooks.slack.com/services/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'
-    dependsOnTasks 'bumperVersionPatch','bumperVersionMinor'
+    dependsOnTasks 'assemble'
     title "https://tikalapks3.s3-us-west-1.amazonaws.com/TikalTask/TikalTask_Build/${System.getenv("BUILD_NUMBER")}/${getVersion()['appVersionName']}.apk"
 }
 
@@ -72,7 +72,7 @@ def renameArtifact(variant, defaultConfig) {
     variant.outputs.all { output ->
         def fullName = output.outputFile.name
         def projectName = fullName.substring(0, fullName.indexOf('-'))
-        outputFileName = "${projectName}-${variant.name}-${appVersionName}.apk"
+        outputFileName = "${projectName}-${variant.name}-${appVersionName}-${System.getenv("BUILD_NUMBER")}.apk"
     }
 
 
