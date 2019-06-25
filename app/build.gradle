@@ -26,7 +26,7 @@ buildscript {
 slack {
     url 'https://hooks.slack.com/services/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'
     dependsOnTasks 'bumperVersionPatch','bumperVersionMinor'
-    title "https://tikalapks3.s3-us-west-1.amazonaws.com/TikalTask/TikalTask_Build/${System.getProperty("number")}/${getVersion()['appVersionName']}.apk"
+    title "https://tikalapks3.s3-us-west-1.amazonaws.com/TikalTask/TikalTask_Build/${System.getProperty("appVersion")}/${getVersion()['appVersionName']}.apk"
 }
 
 android {
