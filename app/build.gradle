@@ -26,7 +26,7 @@ buildscript {
 slack {
     url 'https://hooks.slack.com/services/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'
     dependsOnTasks 'assemble'
-    title "https://tikalapks3.s3-us-west-1.amazonaws.com/TikalTask/TikalTask_Build/${System.getenv("BUILD_NUMBER")}/${getVersion()['appVersionName']}.apk"
+    title "https://tikalapks3.s3-us-west-1.amazonaws.com/TikalTask/TikalTask_Build/${System.getenv("BUILD_NUMBER") + 1}/app-debug-${getVersion()['appVersionName']}-${System.getenv("BUILD_NUMBER")}.apk"
 }
 
 android {
