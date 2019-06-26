@@ -10,6 +10,7 @@ apply from: 'tmp.gradle'
 
 apply plugin: 'com.mindera.gradle.slack'
 
+
 buildscript {
 
     repositories {
@@ -43,7 +44,7 @@ android {
     }
 
     android.applicationVariants.all { variant ->
-        renameArtifact(variant, "debug")
+        renameArtifact(variant)
     }
 
     buildTypes {
@@ -68,7 +69,7 @@ def getVersion(){
     versionProps.load(new FileInputStream(versionPropsFile))
     return versionProps
 }
-def renameArtifact(variant, defaultConfig) {
+def renameArtifact(variant) {
     variant.outputs.all { output ->
         def fullName = output.outputFile.name
         def projectName = fullName.substring(0, fullName.indexOf('-'))
